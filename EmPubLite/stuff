@@ -1,0 +1,123 @@
+• Go to the directory where you installed the Android SDK
+• In there, go into platforms/
+• In there, choose an API level (as icons may look different in Android from
+OS version to version)
+• In there, go into data/res/
+• In there, look at the various drawable- directories, such as drawable-hdpi/
+
+From the Eclipse main menu, choose File > New > Other > Android. In the resulting
+dialog, choose “Android Icon Set” and press Next.
+
+The class name of a widget or container — such as RelativeLayout or TextView –
+forms the name of the XML element.
+
+2. You can provide wrap_content, which means the widget should take up as
+much room as its contents require (e.g., a TextView label widget’s content is
+the text to be displayed)
+3. You can provide match_parent, which means the widget should fill up all
+remaining available space in its enclosing container
+
+Button is a subclass of
+TextView
+
+<Button
+android:onClick="someMethod"
+...
+/>
+This is enough for Android to “wire together” the Button with the click handler.
+When the user clicks the button, someMethod() will be called.
+
+Check all of the properties for the Widgets!!!
+
+The “Request Focus” item in the context menu (right-click over the EditText widget)
+
+The “Hint” item in the Properties pane allows you to set a “hint” for this EditText.
+The “hint” text will be shown in light gray in the EditText widget when the user has
+not entered anything yet.
+
+Some additional attributes on View most likely to be used include:
+1. android:visibility, which controls whether the widget is initially visible
+2. android:nextFocusDown, android:nextFocusLeft,
+android:nextFocusRight, and android:nextFocusUp, which control the
+focus order if the user uses the D-pad, trackball, or similar pointing device
+
+You can give a widget focus via requestFocus() and see if it is focused via
+isFocused()
+
+Sometimes, the R values get out of sync with precompiled classes from previous builds. To resolve this, you need to clean your project. In Eclipse, this is a matter of
+selecting the project, then choosing Project > Clean
+
+The orientation can be modified at runtime by invoking setOrientation() on the
+LinearLayout, supplying it either HORIZONTAL or VERTICAL.
+
+1. isChecked() to determine if the checkbox has been checked
+2. setChecked() to force the checkbox into a checked or unchecked state
+3. toggle() to toggle the checkbox as if the user clicked upon it
+cb.setOnCheckedChangeListener(this)
+onCheckedChanged()
+
+android:textColor="#11ff00"
+
+int x = Integer.parseInt(editText1.getText().toString());
+
+CheckBox, ToggleButton, and RadioButton all inherit from CompoundButton, which
+in turn inherits from TextView. Hence, all the standard TextView properties for font
+face, style, color, etc. are available for controlling the look of radio buttons. Similarly,
+you can call isChecked() on a RadioButton to see if it is selected, toggle() to
+change its checked state, and so on, like you can with a CheckBox.
+
+android:layout_alignBaseline indicates that the baselines of the two
+widgets should be aligned (where the “baseline” is that invisible line that text
+appears to sit on)
+
+android:layout_toRightOf = "@id/widget_a"
+
+First, you will need to call setChoiceMode() on the ListView in Java code to set the
+choice mode, supplying either CHOICE_MODE_SINGLE or CHOICE_MODE_MULTIPLE as the
+value. You can get your ListView from a ListActivity via getListView().
+android.R.layout.simple_list_item_single_choice or
+android.R.layout.simple_list_item_multiple_choice for single-choice or
+multiple-choice lists, respectively.
+
+String[] items={"this", "is", "a", "really", "silly", "list"};
+new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, items);
+
+Accessing a ListView, not like v this, but like vv this.
+displayResults = (Button)findViewById(R.id.displayresults);
+listView = getListView();
+
+browser = (WebView)findViewById(R.id.webkit);
+browser.getSettings().setJavaScriptEnabled(true);
+browser.loadUrl("http://www.google.co.uk");
+
+Instead of loadUrl(), you can also use loadData(). Here, you supply the HTML for
+the WebView to display.
+
+When styling a widget or container, you can apply any of that widget’s or container’s
+attributes in the style itself. So, if it shows up in the “XML Attributes” or “Inherited
+XML Attributes” portions of the Android JavaDocs, you can put it in a style.
+Also, layout directives, such as android:layout_width, can be put in a style.
+
+Themes are styles, applied to an activity or application, via an android:theme
+attribute on the <activity> or <application> element
+
+An Android library project is a special type of Android project designed to share
+code and resources between Android application projects. It is specifically aimed at
+developers or teams creating multiple applications from the same code base. The
+original occurrence of this pattern is the “paid/free” application pair
+
+The biggest difference between an Android library project and a JAR is that an
+Android library project is designed to distribute resources as well as Java code. If all
+you are looking to distribute is Java code, a JAR works just as well as an Android
+library project. But if you need to distribute layouts, themes, and the like, an
+Android library project is the solution.
+
+
+
+
+
+
+
+
+
+
