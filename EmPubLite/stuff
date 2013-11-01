@@ -112,9 +112,21 @@ you are looking to distribute is Java code, a JAR works just as well as an Andro
 library project. But if you need to distribute layouts, themes, and the like, an
 Android library project is the solution.
 
+If you want an activity stack that is B-C-A — so the existing copy of A is brought to
+the foreground, but the instances of B and C are left alone — then you can add
+FLAG_ACTIVITY_REORDER_TO_FRONT to your Intent used with startActivity():
+Intent i=new Intent(this, HomeActivity.class);
+i.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+startActivity(i);
 
-
-
+If, instead, you want an activity stack that is just A — so if the user presses BACK,
+they exit your application — then you would add two flags:
+FLAG_ACTIVITY_CLEAR_TOP and FLAG_ACTIVITY_SINGLE_TOP:
+Intent i=new Intent(this, HomeActivity.class);
+i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+startActivity(i);
+This will finish all activities in the stack between the current activity and the one
+you are starting — in our case, finishing C and B.
 
 
 
