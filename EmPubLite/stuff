@@ -128,6 +128,114 @@ startActivity(i);
 This will finish all activities in the stack between the current activity and the one
 you are starting — in our case, finishing C and B.
 
+For a fragment:
+@Override
+public View onCreateView(LayoutInflater inflater,
+ViewGroup container,
+Bundle savedInstanceState) {
+View result=inflater.inflate(R.layout.mainfrag, container, false);
+result.findViewById(R.id.showOther).setOnClickListener(this);
+return(result);
+}
+This last bit takes the view, finds the button and ties the button click to this view. We must then implement the
+View.OnClickListener interface to make this work. We do this instead of
+android:onClick to route the Button click events to the fragment, not the activity. Since we implement the View.OnClickListener interface, we need the
+corresponding onClick() method implementation.
+
+public class OtherActivity extends LifecycleLoggingActivity {
+@Override
+public void onCreate(Bundle savedInstanceState) {
+super.onCreate(savedInstanceState);
+if (getSupportFragmentManager().findFragmentById(android.R.id.content) ==
+null) {
+getSupportFragmentManager().beginTransaction()
+.add(android.R.id.content,
+new OtherFragment()).commit();
+}
+}
+}
+
+In onActivityCreated() of ActionBar fragment, we call setHasOptionsMenu(true):
+@Override
+public void onActivityCreated(Bundle savedInstanceState) {
+super.onActivityCreated(savedInstanceState);
+setRetainInstance(true);
+setHasOptionsMenu(true);
+if (adapter == null) {
+initAdapter();
+}
+}
+(we will discuss that setRetainInstance(true) call in a later chapter)
+That will trigger our fragment’s onCreateOptionsMenu() and
+onOptionsItemSelected() methods to be called at the appropriate time:
+@Override
+public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+inflater.inflate(R.menu.actions, menu);
+configureActionItem(menu);
+super.onCreateOptionsMenu(menu, inflater);
+}
+@Override
+public boolean onOptionsItemSelected(MenuItem item) {
+if (item.getItemId() == R.id.reset) {
+initAdapter();
+return(true);
+}
+return(super.onOptionsItemSelected(item));
+}
+
+Android ships two PagerAdapter implementations in the Android Support package:
+FragmentPagerAdapter and FragmentStatePagerAdapter. The former is good for
+small numbers of fragments, where holding them all in memory at once will work.
+FragmentStatePagerAdapter is for cases where holding all possible fragments to be
+viewed in the ViewPager would be too much, where Android will discard fragments
+as needed and hold onto the (presumably smaller) states of those fragments instead.
+
+AsyncTask
+Creates a new thread that is managed by Android to do tasks off the main thread. Read the book about it!
+
+AsyncTask is a poor choice when you do not know
+how long you need the thread
+
+ThreadsPostDelayed is worth looking through for other ways to have another thread execute things
+
+And Now, The Caveats
+1. The possibility that users will interact with your activity’s UI while the
+background thread is chugging along. If the work that the background
+thread is doing is altered or invalidated by the user input, you will need to
+communicate this to the background thread. Android includes many classes
+in the java.util.concurrent package that will help you communicate safely
+with your background thread.
+2. The possibility that the activity will be killed off while background work is
+going on. For example, after starting your activity, the user might have a call
+come in, followed by a text message, followed by a need to look up a
+contact… all of which might be sufficient to kick your activity out of memory.
+3. The possibility that your user will get irritated if you chew up a lot of CPU
+time and battery life without giving any payback. Tactically, this means using
+ProgressBar or other means of letting the user know that something is
+happening. Strategically, this means you still need to be efficient at what you
+do — background threads are no panacea for sluggish or pointless code.
+4. The possibility that you will encounter an error during background
+processing. For example, if you are gathering information off the Internet,
+the device might lose connectivity. Alerting the user of the problem via a
+Notification and shutting down the background thread may be your best
+option.
+
+Requesting the use of other applications’ data or services requires the
+uses-permission element to be added to your AndroidManifest.xml file.
+The stock system permissions all begin with android.permission and are listed in
+the Android SDK documentation for Manifest.permission.
+Find out the level of security on the service / data here:
+https://github.com/android/platform_frameworks_base/blob/master/core/res/AndroidManifest.xml
+
+
+
+
+
+
+
+
+
+
 
 
 
