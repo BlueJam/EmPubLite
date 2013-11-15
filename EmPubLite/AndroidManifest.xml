@@ -31,6 +31,8 @@
         </activity>
         <activity android:name="uk.co.bimrose.android.empublite.SimpleContentActivity" >
         </activity>
+        <activity android:name="Preferences" >
+        </activity>
     </application>
 
 </manifest>
