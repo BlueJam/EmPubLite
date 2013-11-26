@@ -14,5 +14,9 @@ open up on that chapter when re-opening the app</string>
 is in the foreground</string>
     <string name="keepscreenon_title">Keep Screen On</string>
     <string name="settings">Settings</string>
-
+    <string name="on_upgrade_error">This should not be called</string>
+    <string name="hint">Enter notes here</string>
+    <string name="notes">Notes!</string>
+    <string name="delete">Delete Note!!!</string>
+    
 </resources>
